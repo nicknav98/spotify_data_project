@@ -38,7 +38,3 @@
 # MAGIC GROUP BY a.primary_genre_l1, al.album_count
 
 # COMMAND ----------
-
-# MAGIC %sql
-# MAGIC SELECT * FROM `spotify-data-project-dev`.`default`.gold_genre_performance
-# MAGIC ORDER BY artist_count DESC
