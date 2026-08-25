@@ -3,26 +3,6 @@
 # MAGIC ## Read CSV files in volume, stream all artist csvs tagged with v*
 # MAGIC
 
-# COMMAND ----------
-
-import pyspark.sql.functions as F
-files = dbutils.fs.ls("/Volumes/spotify-data-project-dev/default/spotify-data-project")
-display(files)
-
-# COMMAND ----------
-
-df_raw = spark.read.csv("/Volumes/spotify-data-project-dev/default/spotify-data-project/spotify_artists.csv", header=True)
-display(df_raw.limit(10))
-display(df_raw.columns)
-
-# COMMAND ----------
-
-try:
-    dbutils.fs.rm("/Volumes/spotify-data-project-dev/default/checkpoints/read_v3", True)
-    dbutils.fs.rm("/Volumes/spotify-data-project-dev/default/checkpoints/write_artists_v3", True)
-    print("Cleared checkpoint directories")
-except Exception as e:
-    print(f"Could not clear checkpoints: {e}")
 
 # COMMAND ----------
 
@@ -89,12 +69,6 @@ process_bronze_artist()
 
 # MAGIC %md 
 # MAGIC ## Set-up ALBUM static table 
-
-# COMMAND ----------
-
-df_raw = spark.read.csv("/Volumes/spotify-data-project-dev/default/spotify-data-project/spotify_albums.csv", header=True)
-display(df_raw.limit(10))
-display(df_raw.columns)
 
 # COMMAND ----------
 
