@@ -48,3 +48,10 @@ WHERE
 - **Change Data Feed bypasses the view.** `table_changes(...)` / `readChangeFeed` reads from the base table's change log, not through `customers_vw` — a non-admin (or any downstream CDC consumer) reading the change feed sees unmasked PII regardless of what the view exposes. See [[Propagating Deletes]].
 - Grants should be structured so non-privileged users/roles only ever get `SELECT` on the *view*, never on the base table or its change feed.
 - Deleted rows raise the same issue as in [[Propagating Deletes]]: a masked view stops showing a "deleted" customer's row, but the PII isn't gone until `VACUUM` runs on the base table — dynamic views are an access-control layer, not a data-retention/erasure mechanism.
+
+## ⚠️ N.B. — streaming tables vs. materialized views hit the same stale-join mechanic
+
+- [[Propagating Deletes]]'s stream-static join section notes that updates to the static/dimension table do **not** recompute output already produced by earlier microbatches — a **streaming table** joined against a dimension locks in whatever the dimension looked like at process time ("fast-but-wrong").
+- A **materialized view** re-evaluates on refresh and stays consistent with the *current* state of all source tables, including dimensions — so a retroactive correction (e.g. a customer address fix) is reflected even for rows processed before the fix.
+- Don't confuse a materialized view with a SQL temp view: an MV is a persisted, Unity Catalog–managed, queryable LDP object refreshed on a schedule/trigger — not ephemeral. SCD Type 1/2 storage (via AUTO CDC, see [[AUTO CDC APIs]]) is a separate mechanism from this streaming-table-vs-MV choice.
+- Source: [Streaming tables — Databricks on AWS](https://docs.databricks.com/aws/en/ldp/concepts/streaming-tables)
