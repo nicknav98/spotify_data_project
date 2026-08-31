@@ -6,3 +6,4 @@ datasets/
 .venv
 .vscode
 uv.lock
+manifest.mf
