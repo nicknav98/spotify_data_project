@@ -4,19 +4,19 @@
 - Every commit to a Delta table is written out as a **JSON file**
 - The log is the source of truth for the table's current state (files, schema, metadata)
 
-![[Pasted image 20260824165138.png]]
+![[assets/Pasted image 20260824165138.png]]
 
 ## The small-files problem
 - Over time, Spark must read many tiny JSON commit files to resolve the current table state
 - More commits → more JSON files → slower state resolution
 
-![[Pasted image 20260824165618.png]]
+![[assets/Pasted image 20260824165618.png]]
 
 ## Checkpoints
 - Databricks automatically writes a **Parquet checkpoint file every 10 commits**
 - Spark then only needs to process the checkpoint plus any newer JSON files — **incremental** processing instead of replaying the full history
 
-![[Pasted image 20260824165830.png]]
+![[assets/Pasted image 20260824165830.png]]
 
 ## Delta Lake file statistics
 - For each added data file, the log captures:

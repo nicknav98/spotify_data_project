@@ -87,7 +87,7 @@ flowchart LR
     R --> D[Downstream consumer]
 ```
 
-![[Pasted image 20260820093756.png]]
+![[assets/Pasted image 20260820093756.png]]
 
 CDF is disabled by default. Enable it when creating a table or afterward with a table property:
 

@@ -23,7 +23,7 @@ spark.conf.set("spark.databricks.delta.optimizeWrite.enabled", "true")
 spark.conf.set("spark.databricks.delta.autoCompact.enabled", "true")
 ```
 
-![[Pasted image 20260825093626.png]]
+![[assets/Pasted image 20260825093626.png]]
 
 ## ✅ Claude: is this on by default?
 

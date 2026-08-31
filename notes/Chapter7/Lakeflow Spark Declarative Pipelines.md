@@ -15,7 +15,7 @@
 
 ## Spark vs LDP
 
-![[Pasted image 20260825135153.png]]
+![[assets/Pasted image 20260825135153.png]]
 
 - **Plain Spark**: cannot create streaming tables in Spark SQL alone — must drop into PySpark to register a streaming table
 - **LDP**: supports creating streaming tables directly in SQL via `CREATE OR REFRESH STREAMING TABLE`
@@ -66,7 +66,7 @@ def tv_name():
 
 ## Overview of object types
 
-![[Pasted image 20260826091006.png]]
+![[assets/Pasted image 20260826091006.png]]
 
 | Type | Behaviour |
 |---|---|
@@ -76,7 +76,7 @@ def tv_name():
 
 ## LDP vs DLT
 
-![[Pasted image 20260826091059.png]]
+![[assets/Pasted image 20260826091059.png]]
 
 > ⚠️ DLT is still required knowledge for the cert exam, even though LDP is the current name/API.
 

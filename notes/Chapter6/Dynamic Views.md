@@ -55,3 +55,12 @@ WHERE
 - A **materialized view** re-evaluates on refresh and stays consistent with the *current* state of all source tables, including dimensions — so a retroactive correction (e.g. a customer address fix) is reflected even for rows processed before the fix.
 - Don't confuse a materialized view with a SQL temp view: an MV is a persisted, Unity Catalog–managed, queryable LDP object refreshed on a schedule/trigger — not ephemeral. SCD Type 1/2 storage (via AUTO CDC, see [[AUTO CDC APIs]]) is a separate mechanism from this streaming-table-vs-MV choice.
 - Source: [Streaming tables — Databricks on AWS](https://docs.databricks.com/aws/en/ldp/concepts/streaming-tables)
+
+## Unity Catalog row filters / column masks vs. dynamic views
+
+- UC also offers **native, table-level** row filters and column masks — a different mechanism from the `is_member()` dynamic-view pattern above, and the one Databricks recommends for PII access control.
+- **Key advantage over dynamic views:** enforcement lives on the table itself, not a view definition layered on top — so it closes the exact CDF-bypass gap noted above. Standard/legacy CDF (`readChangeFeed`, `table_changes()`) goes through the table API and *is* subject to row filters/column masks.
+- **Important asymmetry — they cannot be layered like views:** *"You cannot apply row-level security or column masks to a view."* The `customers_vw` → `customers_fr_vw` layering trick is specific to the dynamic-view technique and has no equivalent for table-level policies.
+- **Caveat — not a strict superset of protection:** rather than enforcing through every access path, several bypass-prone paths are simply *disabled outright* on tables with row filters/masks: raw Delta Lake APIs, path-based/file access, time travel, and deep/shallow clones all stop working. The newer **automatic CDF** feature (DBR 18 LTS+, computed at read time) is explicitly unsupported on such tables — it's blocked, not masked.
+- Two implementation options: manual UDFs assigned per table/column, or **ABAC policies** (recommended) — governed tags + reusable policies that apply centrally across catalogs/schemas instead of per-table UDF wiring.
+- Source: [Row filters and column masks — Databricks on AWS](https://docs.databricks.com/aws/en/data-governance/unity-catalog/filters-and-masks/), [Use change data feed on Databricks](https://docs.databricks.com/aws/en/tables/features/change-data-feed)

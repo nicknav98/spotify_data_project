@@ -19,8 +19,8 @@
 OPTIMIZE table_name ZORDER BY column_name
 ```
 
-![[Pasted image 20260824162544.png]]
-![[Pasted image 20260824162623.png]]
+![[assets/Pasted image 20260824162544.png]]
+![[assets/Pasted image 20260824162623.png]]
 
 ## Liquid Clustering
 - Improved version of Z-Ordering — more flexible and more performant
@@ -46,7 +46,7 @@ CLUSTER BY (<clustering_columns>)
 OPTIMIZE table2
 ```
 
-![[Pasted image 20260824162835.png]]
+![[assets/Pasted image 20260824162835.png]]
 
 ## Automatic Liquid Clustering
 - Delegates key selection to Databricks, based on historical query patterns

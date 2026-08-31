@@ -5,7 +5,7 @@
 - Data is physically split into separate directories/files on disk, one per distinct partition value
 - Enables **partition pruning**: queries that filter on the partition column skip scanning irrelevant files
 
-![[Pasted image 20260824155600.png]]
+![[assets/Pasted image 20260824155600.png]]
 
 ## Creating a partitioned table
 ```sql
@@ -30,7 +30,7 @@ CREATE TABLE my_table (
 PARTITIONED BY (year, month)
 ```
 
-![[Pasted image 20260824155917.png]]
+![[assets/Pasted image 20260824155917.png]]
 
 ## Choosing partition columns
 - **Low cardinality** — few, recurring distinct values (e.g. year, region, category)
@@ -51,6 +51,6 @@ PARTITIONED BY (year, month)
   - `REPLACE TABLE ... PARTITIONED BY (...) AS SELECT ...`
   - Overwrite affected partitions with `dataframe.write.option("replaceWhere", "...")` for targeted rewrites
 
-![[Pasted image 20260824160440.png]]
-![[Pasted image 20260824160508.png]]
-![[Pasted image 20260824160533.png]]
+![[assets/Pasted image 20260824160440.png]]
+![[assets/Pasted image 20260824160508.png]]
+![[assets/Pasted image 20260824160533.png]]
