@@ -12,6 +12,37 @@ targets:
     workspace:
       host: https://dbc-9b6b9cf8-eff9.cloud.databricks.com
 
+resources:
+  jobs:
+    SpotifyStats:
+      name: SpotifyStats_DAB
+      tasks:
+        - task_key: Ingest_Data
+          notebook_task:
+            notebook_path: /Workspace/Users/nicholas.navarro@knowit.fi/spotify_data_project/ELT-Ready/ingest
+            source: WORKSPACE
+          environment_key: Default
+        - task_key: Silver_Layer
+          depends_on:
+            - task_key: Ingest_Data
+          notebook_task:
+            notebook_path: /Workspace/Users/nicholas.navarro@knowit.fi/spotify_data_project/ELT-Ready/silver_layer
+            source: WORKSPACE
+        - task_key: Gold_Layer
+          depends_on:
+            - task_key: Silver_Layer
+          notebook_task:
+            notebook_path: /Workspace/Users/nicholas.navarro@knowit.fi/spotify_data_project/ELT-Ready/gold_layer
+            source: WORKSPACE
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
+
+    
   ## Optionally, there could be 'staging' or 'prod' targets here.
   #
   # prod:
