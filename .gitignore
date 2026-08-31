@@ -1,3 +1,8 @@
 .DS_Store
 datasets/
 
+
+.databricks
+.venv
+.vscode
+uv.lock

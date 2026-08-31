@@ -10,6 +10,7 @@
 # MAGIC ## Define streaming bronze table, list of artists that could be updated every month 
 
 # COMMAND ----------
+import pyspark.sql.functions as F
 
 SOURCE_PATH = (
     "/Volumes/spotify-data-project-dev/default/"
